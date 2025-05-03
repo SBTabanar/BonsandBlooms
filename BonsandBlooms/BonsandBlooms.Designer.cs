@@ -73,7 +73,7 @@
             this.tsBread.Size = new System.Drawing.Size(139, 154);
             this.tsBread.Text = "Products";
             this.tsBread.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsBread.Click += new System.EventHandler(this.tsBread_Click);
+            this.tsBread.Click += new System.EventHandler(this.tsProduct_Click);
             // 
             // tsListofProducts
             // 

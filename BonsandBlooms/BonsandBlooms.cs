@@ -50,7 +50,7 @@ namespace BonsandBlooms
             disable_menu();
         }
 
-        private void tsBread_Click(object sender, EventArgs e)
+        private void tsProduct_Click(object sender, EventArgs e)
         {
             shwfrm(new frmProduct());
         }
