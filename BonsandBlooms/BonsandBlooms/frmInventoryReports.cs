@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -228,34 +229,38 @@ namespace BonsandBlooms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            if( rdoProduct.Checked)
-            {
-                rdoStockOut.Checked = true;
-            }
+            // Use US format for Access SQL
+            string dfrom = dtpFrom.Value.ToString("MM/dd/yyyy");
+            string dto = dtpTo.Value.ToString("MM/dd/yyyy");
 
-
-            DateTime dfrom = DateTime.Parse(dtpFrom.Text);
-            DateTime dto = DateTime.Parse(dtpTo.Text);
-
-            if( rdoStockIn.Checked)
+            if (rdoStockIn.Checked)
             {
                 LBLLIST.Text = "Stock of " + cboCateg.Text + " from " + dfrom + " to " + dto;
-                query = "SELECT P.PROCODE AS [ProductCode],DATEVALUE(DATERECEIVED) AS [ReceivedDate], (PRONAME + ' ' + PRODESC) AS [Product],PROPRICE AS [Price],RECEIVEDQTY  AS [Quantity],(ROUND(RECEIVEDQTY * PROPRICE)) AS [TotalPrice] " +
-                  " FROM tblStockIn AS S,  tblProductInfo AS P " +
-                  " WHERE S.PROCODE=P.PROCODE AND DATEVALUE(DATERECEIVED) BETWEEN #" + dfrom + "# AND #" + dto + "#  AND PRODESC LIKE '%" + txtSearch.Text + "%' AND PRONAME LIKE '%" + txtSearch.Text + "%'";
+                query = "SELECT P.PROCODE AS [ProductCode], DATEVALUE(DATERECEIVED) AS [ReceivedDate], " +
+                        "(PRONAME + ' ' + PRODESC) AS [Product], PROPRICE AS [Price], RECEIVEDQTY AS [Quantity], " +
+                        "(ROUND(RECEIVEDQTY * PROPRICE)) AS [TotalPrice] " +
+                        "FROM tblStockIn AS S, tblProductInfo AS P " +
+                        "WHERE S.PROCODE=P.PROCODE " +
+                        "AND DATEVALUE(DATERECEIVED) BETWEEN #" + dfrom + "# AND #" + dto + "# " +
+                        "AND (PRODESC LIKE '%" + txtSearch.Text + "%' OR PRONAME LIKE '%" + txtSearch.Text + "%')";
                 config.Load_DTG(query, dtglist);
             }
             else if (rdoStockOut.Checked)
             {
                 LBLLIST.Text = "Sold " + cboCateg.Text + " from " + dfrom + " to " + dto;
-                query = "SELECT P.PROCODE AS [ProductCode],DATEVALUE(DATEOUT) AS [TransactionDate], (PRONAME + ' ' + PRODESC) AS [Product],PROPRICE AS [Price],OUTQTY   AS [Quantity],(ROUND(OUTQTY * PROPRICE)) AS [TotalPrice] " +
-                " FROM tblStockOut AS S,  tblProductInfo AS P  " +
-                " WHERE S.PROCODE=P.PROCODE  AND  DATEVALUE(DATEOUT) BETWEEN #" + dfrom + "# AND #" + dto + "#  AND CATEGORY ='" + cboCateg.Text + "' AND PRONAME LIKE '%" + txtSearch.Text + "%'";
+                query = "SELECT P.PROCODE AS [ProductCode], DATEVALUE(DATEOUT) AS [TransactionDate], " +
+                        "(PRONAME + ' ' + PRODESC) AS [Product], PROPRICE AS [Price], OUTQTY AS [Quantity], " +
+                        "(ROUND(OUTQTY * PROPRICE)) AS [TotalPrice] " +
+                        "FROM tblStockOut AS S, tblProductInfo AS P " +
+                        "WHERE S.PROCODE=P.PROCODE " +
+                        "AND DATEVALUE(DATEOUT) BETWEEN #" + dfrom + "# AND #" + dto + "# " +
+                        "AND CATEGORY ='" + cboCateg.Text + "' " +
+                        "AND (PRODESC LIKE '%" + txtSearch.Text + "%' OR PRONAME LIKE '%" + txtSearch.Text + "%')";
                 config.Load_DTG(query, dtglist);
             }
-             
-             
         }
+
+
 
         private void BTNSEARCHGRID_Click(object sender, EventArgs e)
         {

@@ -73,34 +73,34 @@ namespace BonsandBlooms
                 con.Close();
             }
         }
-        public void Load_DTG(string sql,DataGridView dtg)
+        public void Load_DTG(string sql, DataGridView dtg, params OleDbParameter[] parameters)
         {
             try
             {
-                //con.Open();
                 if (con.State != ConnectionState.Open)
                 {
                     con.Open();
                 }
-                cmd = new OleDbCommand();
-                da = new OleDbDataAdapter();
-                dt = new DataTable();
 
+                using (OleDbCommand cmd = new OleDbCommand(sql, con))
+                {
+                    // Add parameters if any
+                    if (parameters != null && parameters.Length > 0)
+                    {
+                        cmd.Parameters.AddRange(parameters);
+                    }
 
-                cmd.Connection = con;
-                cmd.CommandText = sql;
-                da.SelectCommand = cmd;
-                da.Fill(dt);
-                dtg.DataSource = dt;
+                    using (OleDbDataAdapter da = new OleDbDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dtg.DataSource = dt;
 
-               
-                funct.ResponsiveDtg(dtg);
-                dtg.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dtg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-                
-                
-
+                        funct.ResponsiveDtg(dtg);
+                        dtg.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        dtg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -108,11 +108,11 @@ namespace BonsandBlooms
             }
             finally
             {
-                da.Dispose();
-                con.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
-
         }
+
         public void fiil_CBO(string sql, ComboBox cbo)
         {
             try
