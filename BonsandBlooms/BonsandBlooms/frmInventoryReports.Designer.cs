@@ -36,7 +36,6 @@
             this.dtglist = new System.Windows.Forms.DataGridView();
             this.LBLLIST = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.rdoWeekly = new System.Windows.Forms.RadioButton();
             this.Label2 = new System.Windows.Forms.Label();
             this.rdoMonthly = new System.Windows.Forms.RadioButton();
             this.Label3 = new System.Windows.Forms.Label();
@@ -189,20 +188,6 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // rdoWeekly
-            // 
-            this.rdoWeekly.AutoSize = true;
-            this.rdoWeekly.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdoWeekly.Location = new System.Drawing.Point(21, 185);
-            this.rdoWeekly.Margin = new System.Windows.Forms.Padding(4);
-            this.rdoWeekly.Name = "rdoWeekly";
-            this.rdoWeekly.Size = new System.Drawing.Size(67, 17);
-            this.rdoWeekly.TabIndex = 2;
-            this.rdoWeekly.TabStop = true;
-            this.rdoWeekly.Text = "Weekly";
-            this.rdoWeekly.UseVisualStyleBackColor = true;
-            this.rdoWeekly.CheckedChanged += new System.EventHandler(this.rdoWeekly_CheckedChanged);
-            // 
             // Label2
             // 
             this.Label2.AutoSize = true;
@@ -218,7 +203,7 @@
             // 
             this.rdoMonthly.AutoSize = true;
             this.rdoMonthly.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdoMonthly.Location = new System.Drawing.Point(119, 185);
+            this.rdoMonthly.Location = new System.Drawing.Point(21, 181);
             this.rdoMonthly.Margin = new System.Windows.Forms.Padding(4);
             this.rdoMonthly.Name = "rdoMonthly";
             this.rdoMonthly.Size = new System.Drawing.Size(69, 17);
@@ -324,7 +309,6 @@
             // 
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(143)))), ((int)(((byte)(138)))));
             this.GroupBox2.Controls.Add(this.btnSearch);
-            this.GroupBox2.Controls.Add(this.rdoWeekly);
             this.GroupBox2.Controls.Add(this.Label2);
             this.GroupBox2.Controls.Add(this.rdoMonthly);
             this.GroupBox2.Controls.Add(this.Label3);
@@ -472,7 +456,6 @@
         internal System.Windows.Forms.DataGridView dtglist;
         internal System.Windows.Forms.Label LBLLIST;
         internal System.Windows.Forms.Button btnSearch;
-        internal System.Windows.Forms.RadioButton rdoWeekly;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.RadioButton rdoMonthly;
         internal System.Windows.Forms.Label Label3;
