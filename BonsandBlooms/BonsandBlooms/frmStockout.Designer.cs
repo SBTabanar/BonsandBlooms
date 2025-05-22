@@ -453,6 +453,7 @@
             this.LBLMSG.Size = new System.Drawing.Size(923, 23);
             this.LBLMSG.TabIndex = 52;
             this.LBLMSG.Text = "Label11";
+            this.LBLMSG.Click += new System.EventHandler(this.LBLMSG_Click);
             // 
             // frmStockout
             // 

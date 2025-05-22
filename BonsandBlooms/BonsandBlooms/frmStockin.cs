@@ -15,6 +15,10 @@ namespace BonsandBlooms
         public frmStockin()
         {
             InitializeComponent();
+
+            // Wire up the handlers for autocomplete and synchronization
+            TXTPRODUCT.TextChanged += TXTPRODUCT_TextChanged;
+            txtPROCODE.TextChanged += txtPROCODE_TextChanged;
         }
 
         private void frmStockin_Load(object sender, EventArgs e)
@@ -42,7 +46,15 @@ namespace BonsandBlooms
 
                 config.autonumber_transaction(1, LBLTRANSNUM);
 
+                // Autocomplete for product code
                 config.autocomplete("SELECT PROCODE FROM tblProductInfo", txtPROCODE);
+
+                // Autocomplete for product name
+                config.autocomplete("SELECT PRONAME FROM tblProductInfo", TXTPRODUCT);
+
+                // Ensure product name textbox is enabled and editable
+                TXTPRODUCT.Enabled = true;
+                TXTPRODUCT.ReadOnly = false;
             }
             catch (Exception ex)
             {
@@ -147,11 +159,12 @@ namespace BonsandBlooms
                 sql = "SELECT * FROM tblProductInfo WHERE PROCODE = ?";
                 var dt = config.Execute_Query(sql, new System.Data.OleDb.OleDbParameter("PROCODE", txtPROCODE.Text));
                 maxrow = dt.Rows.Count;
-
                 if (maxrow > 0)
                 {
                     var r = dt.Rows[0];
-                    TXTPRODUCT.Text = r.Field<string>("PRONAME");
+                    // Only update if different to avoid recursion
+                    if (TXTPRODUCT.Text != r.Field<string>("PRONAME"))
+                        TXTPRODUCT.Text = r.Field<string>("PRONAME");
                     TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
                     TXTPRICE.Text = r.Field<decimal>("PROPRICE").ToString("F2");
 
@@ -161,6 +174,47 @@ namespace BonsandBlooms
                 else
                 {
                     ClearProductDetails();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error loading product details: " + ex.Message);
+            }
+        }
+
+        private void TXTPRODUCT_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TXTPRODUCT.Text))
+                {
+                    // Autodelete product code if product name is deleted
+                    txtPROCODE.Clear();
+                    ClearProductDetails();
+                    return;
+                }
+
+                sql = "SELECT * FROM tblProductInfo WHERE PRONAME = ?";
+                var dt = config.Execute_Query(sql, new System.Data.OleDb.OleDbParameter("PRONAME", TXTPRODUCT.Text));
+                maxrow = dt.Rows.Count;
+                if (maxrow > 0)
+                {
+                    var r = dt.Rows[0];
+                    // Only update if different to avoid recursion
+                    if (txtPROCODE.Text != r.Field<string>("PROCODE"))
+                        txtPROCODE.Text = r.Field<string>("PROCODE");
+                    TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
+                    TXTPRICE.Text = r.Field<decimal>("PROPRICE").ToString("F2");
+                    int currentQty = r.Field<int>("PROQTY");
+                    LBLCURRENTQTY.Text = "Current Quantity: " + currentQty.ToString();
+                }
+                else
+                {
+                    // If the name is not found, clear details except the name itself
+                    txtPROCODE.Clear();
+                    TXTDESC.Clear();
+                    TXTPRICE.Clear();
+                    LBLCURRENTQTY.Text = "Current Quantity: 0";
                 }
             }
             catch (Exception ex)
@@ -200,14 +254,25 @@ namespace BonsandBlooms
         {
             try
             {
-                Form frm = new frmListStockin();
-                frm.ShowDialog();
+                using (var listForm = new frmListStockin())
+                {
+                    if (listForm.ShowDialog() == DialogResult.OK)
+                    {
+                        txtPROCODE.Text = listForm.SelectedProductCode;
+                        TXTPRODUCT.Text = listForm.SelectedProductName;
+                        TXTDESC.Text = listForm.SelectedDesc +
+                            (string.IsNullOrEmpty(listForm.SelectedCategory) ? "" : " [" + listForm.SelectedCategory + "]");
+                        TXTPRICE.Text = listForm.SelectedPrice;
+                    }
+                }
             }
             catch (Exception ex)
             {
                 ShowError("Error opening stock-in list: " + ex.Message);
             }
         }
+
+
 
         private void ClearProductDetails()
         {

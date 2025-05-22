@@ -45,16 +45,42 @@ namespace BonsandBlooms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            sql = "DELETE * FROM tblStockIn WHERE PROCODE = '" + DTGLIST.CurrentRow.Cells[0].Value + "'";
-            config.Execute_Query(sql); 
+            if (DTGLIST.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a product to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            sql = "DELETE * FROM tblStockOut WHERE PROCODE = '" + DTGLIST.CurrentRow.Cells[0].Value + "'";
-            config.Execute_Query(sql);
-              
-            sql = "DELETE * FROM tblProductInfo WHERE PROCODE = '" + DTGLIST.CurrentRow.Cells[0].Value + "'";
-            config.Execute_CUD(sql, "Failed to delete", "Product has been deleted.");
-            config.Load_DTG(sql, DTGLIST);
+            // Confirm deletion
+            var result = MessageBox.Show("Are you sure you want to delete the selected product? This action cannot be undone.",
+                                         "Confirm Delete",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    string productCode = DTGLIST.CurrentRow.Cells["ProductCode"].Value.ToString();
+
+                    sql = "DELETE FROM tblStockIn WHERE PROCODE = '" + productCode + "'";
+                    config.Execute_Query(sql);
+
+                    sql = "DELETE FROM tblStockOut WHERE PROCODE = '" + productCode + "'";
+                    config.Execute_Query(sql);
+
+                    sql = "DELETE FROM tblProductInfo WHERE PROCODE = '" + productCode + "'";
+                    config.Execute_CUD(sql, "Failed to delete product.", "Product has been deleted.");
+
+                    btnRefresh_Click(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting product: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
+
 
         private void btnEdit_Click(object sender, EventArgs e)
         {

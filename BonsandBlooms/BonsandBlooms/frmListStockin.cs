@@ -12,9 +12,18 @@ namespace BonsandBlooms
 {
     public partial class frmListStockin : Form
     {
+        public string SelectedProductCode { get; private set; }
+        public string SelectedProductName { get; private set; }
+        public string SelectedCategory { get; private set; }
+        public string SelectedDesc { get; private set; }
+        public string SelectedPrice { get; private set; }
+        public string SelectedQty { get; private set; }
+
         public frmListStockin()
         {
             InitializeComponent();
+            DTGLIST.CellDoubleClick += DTGLIST_CellDoubleClick;
+
         }
         DatabaseConnect config = new DatabaseConnect();
         usableFunction func = new usableFunction();
@@ -24,6 +33,23 @@ namespace BonsandBlooms
         {
             this.Close();
         }
+
+        private void DTGLIST_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = DTGLIST.Rows[e.RowIndex];
+                SelectedProductCode = row.Cells["ProductCode"].Value.ToString();
+                SelectedProductName = row.Cells["Product"].Value.ToString();
+                SelectedCategory = ""; 
+                SelectedDesc = row.Cells["Description"].Value.ToString();
+                SelectedPrice = row.Cells["Price"].Value.ToString();
+                SelectedQty = row.Cells["Quantity"].Value.ToString();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
+
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {

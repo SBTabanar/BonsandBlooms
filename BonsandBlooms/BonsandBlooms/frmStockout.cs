@@ -15,6 +15,9 @@ namespace BonsandBlooms
         public frmStockout()
         {
             InitializeComponent();
+
+            TXTPRODUCT.TextChanged += TXTPRODUCT_TextChanged;
+            txtPROCODE.TextChanged += txtPROCODE_TextChanged;
         }
 
         private void BTNNEW_Click(object sender, EventArgs e)
@@ -29,6 +32,9 @@ namespace BonsandBlooms
                 query = "SELECT PROCODE FROM tblProductInfo";
                 config.autocomplete(query, txtPROCODE);
 
+                query = "SELECT PRONAME FROM tblProductInfo";
+                config.autocomplete(query, TXTPRODUCT);
+
                 config.autonumber_transaction(1, LBLTRANSNUM);
             }
             catch (Exception ex)
@@ -36,6 +42,7 @@ namespace BonsandBlooms
                 ShowError("Error initializing form: " + ex.Message);
             }
         }
+
 
         private void frmStockout_Load(object sender, EventArgs e)
         {
@@ -66,7 +73,8 @@ namespace BonsandBlooms
                 if (maxrow > 0)
                 {
                     var r = dt.Rows[0];
-                    TXTPRODUCT.Text = r.Field<string>("PRONAME");
+                    if (TXTPRODUCT.Text != r.Field<string>("PRONAME"))
+                        TXTPRODUCT.Text = r.Field<string>("PRONAME");
                     TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
                     TXTPRICE.Text = r.Field<decimal>("PROPRICE").ToString("F2");
                     TXTAVAILQTY.Text = r.Field<int>("PROQTY").ToString();
@@ -81,6 +89,46 @@ namespace BonsandBlooms
                 ShowError("Error loading product details: " + ex.Message);
             }
         }
+
+
+        private void TXTPRODUCT_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TXTPRODUCT.Text))
+                {
+                    txtPROCODE.Clear();
+                    ClearProductDetails();
+                    return;
+                }
+
+                query = "SELECT * FROM tblProductInfo WHERE PRONAME = ?";
+                var dt = config.Execute_Query(query, new System.Data.OleDb.OleDbParameter("PRONAME", TXTPRODUCT.Text));
+                maxrow = dt.Rows.Count;
+                if (maxrow > 0)
+                {
+                    var r = dt.Rows[0];
+                    if (txtPROCODE.Text != r.Field<string>("PROCODE"))
+                        txtPROCODE.Text = r.Field<string>("PROCODE");
+                    TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
+                    TXTPRICE.Text = r.Field<decimal>("PROPRICE").ToString("F2");
+                    TXTAVAILQTY.Text = r.Field<int>("PROQTY").ToString();
+                }
+                else
+                {
+                    txtPROCODE.Clear();
+                    TXTDESC.Clear();
+                    TXTPRICE.Clear();
+                    TXTAVAILQTY.Clear();
+                    TXTREMAINQTY.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error loading product details: " + ex.Message);
+            }
+        }
+
 
         private void TXTQTY_TextChanged(object sender, EventArgs e)
         {
@@ -127,7 +175,6 @@ namespace BonsandBlooms
         {
             try
             {
-                // Validate required fields
                 if (string.IsNullOrWhiteSpace(TXTDESC.Text) ||
                     string.IsNullOrWhiteSpace(TXTQTY.Text) ||
                     string.IsNullOrWhiteSpace(txtPROCODE.Text) ||
@@ -137,7 +184,6 @@ namespace BonsandBlooms
                     return;
                 }
 
-                // Validate quantities
                 if (!double.TryParse(TXTAVAILQTY.Text, out double availableQty))
                 {
                     ShowWarning("Invalid available quantity.");
@@ -158,21 +204,17 @@ namespace BonsandBlooms
                     return;
                 }
 
-                // Validate price
                 if (!double.TryParse(TXTPRICE.Text, out double price) || price < 0)
                 {
                     ShowWarning("Invalid price.");
                     return;
                 }
-
-                // Validate total price
                 if (!double.TryParse(TXTTOT.Text, out double total) || total < 0)
                 {
                     ShowWarning("Invalid total price.");
                     return;
                 }
 
-                // Insert stock out record with parameters to prevent SQL injection
                 query = "INSERT INTO tblStockOut (TRANSNUM, PROCODE, DATEOUT, OUTQTY, OUTUNIT, OUTTOTPRICE) " +
                         "VALUES (?, ?, ?, ?, ?, ?)";
                 var parametersInsert = new[]
@@ -186,7 +228,6 @@ namespace BonsandBlooms
                 };
                 config.Execute_CUD(query, "Error saving stock out record.", "Stock out record saved successfully.", parametersInsert);
 
-                // Update product quantity safely
                 query = "UPDATE tblProductInfo SET PROQTY = PROQTY - ? WHERE PROCODE = ?";
                 var parametersUpdate = new[]
                 {
@@ -197,9 +238,6 @@ namespace BonsandBlooms
 
                 double newQty = availableQty - qty;
 
-                LBLMSG.Text = $"The {TXTPRODUCT.Text} has been deducted from the inventory.";
-                LBLMSG.BackColor = Color.Aquamarine;
-                LBLMSG.ForeColor = Color.Black;
 
                 config.update_Autonumber(1);
 
@@ -223,16 +261,19 @@ namespace BonsandBlooms
 
         private void btnList_Click(object sender, EventArgs e)
         {
-            try
+            using (var listForm = new frmListStockout())
             {
-                Form frm = new frmListStockout();
-                frm.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                ShowError("Error opening stock out list: " + ex.Message);
+                if (listForm.ShowDialog() == DialogResult.OK)
+                {
+                    txtPROCODE.Text = listForm.SelectedProductCode;
+                    TXTPRODUCT.Text = listForm.SelectedProductName;
+                    TXTDESC.Text = listForm.SelectedDesc + " [" + listForm.SelectedCategory + "]";
+                    TXTPRICE.Text = listForm.SelectedPrice;
+                    TXTAVAILQTY.Text = listForm.SelectedQty;
+                }
             }
         }
+
 
         private void ClearProductDetails()
         {
@@ -256,6 +297,11 @@ namespace BonsandBlooms
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LBLMSG_Click(object sender, EventArgs e)
         {
 
         }
