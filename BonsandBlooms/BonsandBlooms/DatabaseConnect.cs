@@ -100,6 +100,35 @@ namespace BonsandBlooms
             return dt;
         }
 
+        public void Execute_CUD(string sql, string msg_false, string msg_true, params OleDbParameter[] parameters)
+        {
+            try
+            {
+                con.Open();
+                using (OleDbCommand cmd = new OleDbCommand(sql, con))
+                {
+                    if (parameters != null && parameters.Length > 0)
+                        cmd.Parameters.AddRange(parameters);
+
+                    int result = cmd.ExecuteNonQuery();
+
+                    if (result > 0)
+                        MessageBox.Show(msg_true);
+                    else
+                        MessageBox.Show(msg_false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
         public void Load_DTG(string sql, DataGridView dtg, params OleDbParameter[] parameters)
         {
             try

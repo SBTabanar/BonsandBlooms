@@ -379,6 +379,7 @@
             this.GroupBox1.TabIndex = 48;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Product Details";
+            this.GroupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
             // 
             // TXTAVAILQTY
             // 

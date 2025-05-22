@@ -90,7 +90,7 @@ namespace BonsandBlooms
 
         public void messagerequired()
         {
-            MessageBox.Show("All field are requireds.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("All fields are required.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
     }

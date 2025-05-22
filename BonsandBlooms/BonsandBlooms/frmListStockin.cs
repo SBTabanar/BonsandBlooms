@@ -60,5 +60,10 @@ namespace BonsandBlooms
         {
             this.Close();
         }
+
+        private void DTGLIST_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

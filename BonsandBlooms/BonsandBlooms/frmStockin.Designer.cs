@@ -42,6 +42,7 @@
             this.Label8 = new System.Windows.Forms.Label();
             this.TXTPRODUCT = new System.Windows.Forms.TextBox();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
+            this.LBLCURRENTQTY = new System.Windows.Forms.Label();
             this.LBLUNIT = new System.Windows.Forms.Label();
             this.Label15 = new System.Windows.Forms.Label();
             this.BTNNEW = new System.Windows.Forms.Button();
@@ -56,7 +57,6 @@
             this.CBOUNIT = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.LBLMSG = new System.Windows.Forms.Label();
-            this.LBLCURRENTQTY = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -224,6 +224,16 @@
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Summary";
             // 
+            // LBLCURRENTQTY
+            // 
+            this.LBLCURRENTQTY.AutoSize = true;
+            this.LBLCURRENTQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBLCURRENTQTY.Location = new System.Drawing.Point(361, 154);
+            this.LBLCURRENTQTY.Name = "LBLCURRENTQTY";
+            this.LBLCURRENTQTY.Size = new System.Drawing.Size(95, 16);
+            this.LBLCURRENTQTY.TabIndex = 18;
+            this.LBLCURRENTQTY.Text = "Current Qty : ";
+            // 
             // LBLUNIT
             // 
             this.LBLUNIT.AutoSize = true;
@@ -384,7 +394,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 73;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // LBLMSG
             // 
@@ -395,17 +404,6 @@
             this.LBLMSG.Size = new System.Drawing.Size(915, 23);
             this.LBLMSG.TabIndex = 36;
             this.LBLMSG.Text = "Label11";
-            // 
-            // LBLCURRENTQTY
-            // 
-            this.LBLCURRENTQTY.AutoSize = true;
-            this.LBLCURRENTQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBLCURRENTQTY.Location = new System.Drawing.Point(397, 154);
-            this.LBLCURRENTQTY.Name = "LBLCURRENTQTY";
-            this.LBLCURRENTQTY.Size = new System.Drawing.Size(95, 16);
-            this.LBLCURRENTQTY.TabIndex = 18;
-            this.LBLCURRENTQTY.Text = "Current Qty : ";
-            this.LBLCURRENTQTY.Click += new System.EventHandler(this.label6_Click);
             // 
             // frmStockin
             // 

@@ -168,6 +168,7 @@
             this.DTGLIST.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DTGLIST.Size = new System.Drawing.Size(814, 448);
             this.DTGLIST.TabIndex = 52;
+            this.DTGLIST.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DTGLIST_CellContentClick);
             // 
             // frmListStockin
             // 
