@@ -13,6 +13,8 @@ namespace BonsandBlooms
 {
     public partial class BonsandBlooms : Form
     {
+        private string currentUserRole = string.Empty;
+
         public BonsandBlooms()
         {
             InitializeComponent();
@@ -22,20 +24,25 @@ namespace BonsandBlooms
             frm.ShowDialog();
         }
 
-        public void enable_menu()
+        public void enable_menu(string userRole)
         {
+            currentUserRole = userRole;
+
             tsFlower.Enabled = true;
             tsListofProducts.Enabled = true;
             tsLogin.Text = "Logout";
             tsReport.Enabled = true;
             tsStockin.Enabled = true;
             tsStockout.Enabled = true;
-            tsUser.Enabled = true;
 
+            tsUser.Enabled = (userRole.Equals("Administrator", StringComparison.OrdinalIgnoreCase));
         }
+
 
         private void disable_menu()
         {
+            currentUserRole = string.Empty;
+
             tsFlower.Enabled = false;
             tsListofProducts.Enabled = false;
             tsLogin.Text = "Login";
@@ -43,8 +50,8 @@ namespace BonsandBlooms
             tsStockin.Enabled = false;
             tsStockout.Enabled = false;
             tsUser.Enabled = false;
-
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             disable_menu();
@@ -72,8 +79,14 @@ namespace BonsandBlooms
 
         private void tsUser_Click(object sender, EventArgs e)
         {
+            if (!currentUserRole.Equals("Administrator", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Access denied. Only administrators can manage users.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             shwfrm(new frmUser());
         }
+
 
         private void tsReport_Click(object sender, EventArgs e)
         {

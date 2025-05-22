@@ -101,5 +101,23 @@ namespace BonsandBlooms
         {
 
         }
+
+        private void dtglist_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkShowPassword.Checked)
+            {
+                txtpass.UseSystemPasswordChar = false; // Show password
+            }
+            else
+            {
+                txtpass.UseSystemPasswordChar = true;  // Hide password
+            }
+        }
+
     }
 }

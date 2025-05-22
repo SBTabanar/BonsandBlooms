@@ -73,6 +73,33 @@ namespace BonsandBlooms
                 con.Close();
             }
         }
+
+        public DataTable Execute_Query(string sql, params OleDbParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                con.Open();
+                using (OleDbCommand cmd = new OleDbCommand(sql, con))
+                {
+                    if (parameters != null && parameters.Length > 0)
+                        cmd.Parameters.AddRange(parameters);
+
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return dt;
+        }
+
         public void Load_DTG(string sql, DataGridView dtg, params OleDbParameter[] parameters)
         {
             try

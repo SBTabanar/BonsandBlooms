@@ -48,6 +48,7 @@
             this.btnnew = new System.Windows.Forms.Button();
             this.Label3 = new System.Windows.Forms.Label();
             this.txtsearch = new System.Windows.Forms.TextBox();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.Panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtglist)).BeginInit();
             this.Panel1.SuspendLayout();
@@ -56,6 +57,7 @@
             // Panel2
             // 
             this.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Panel2.Controls.Add(this.chkShowPassword);
             this.Panel2.Controls.Add(this.Label7);
             this.Panel2.Controls.Add(this.Label8);
             this.Panel2.Controls.Add(this.txtname);
@@ -146,7 +148,7 @@
             this.txtpass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtpass.Location = new System.Drawing.Point(116, 102);
             this.txtpass.Name = "txtpass";
-            this.txtpass.Size = new System.Drawing.Size(443, 26);
+            this.txtpass.Size = new System.Drawing.Size(388, 26);
             this.txtpass.TabIndex = 2;
             this.txtpass.UseSystemPasswordChar = true;
             // 
@@ -191,6 +193,7 @@
             this.dtglist.Size = new System.Drawing.Size(594, 208);
             this.dtglist.TabIndex = 6;
             this.dtglist.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtglist_CellClick);
+            this.dtglist.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtglist_CellContentClick);
             // 
             // btndelete
             // 
@@ -288,6 +291,18 @@
             this.txtsearch.TabIndex = 25;
             this.txtsearch.TextChanged += new System.EventHandler(this.txtsearch_TextChanged);
             // 
+            // chkShowPassword
+            // 
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowPassword.Location = new System.Drawing.Point(510, 105);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(65, 22);
+            this.chkShowPassword.TabIndex = 13;
+            this.chkShowPassword.Text = "Show";
+            this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
+            // 
             // frmUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,5 +354,6 @@
         internal System.Windows.Forms.Button btnnew;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.TextBox txtsearch;
+        private System.Windows.Forms.CheckBox chkShowPassword;
     }
 }

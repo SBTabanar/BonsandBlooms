@@ -58,6 +58,7 @@
             this.Panel1.Name = "Panel1";
             this.Panel1.Size = new System.Drawing.Size(583, 331);
             this.Panel1.TabIndex = 9;
+            this.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
             // 
             // label1
             // 
@@ -103,6 +104,7 @@
             this.UsernameLabel.TabIndex = 0;
             this.UsernameLabel.Text = "&Username";
             this.UsernameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
             // 
             // OK
             // 
