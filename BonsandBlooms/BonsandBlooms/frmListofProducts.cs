@@ -119,12 +119,15 @@ namespace BonsandBlooms
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            // Optional: Add image click behavior
         }
 
         private void DTGLIST_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Optional: Add cell content click behavior
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -170,7 +170,6 @@ namespace BonsandBlooms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // Use US format for Access SQL
             string dfrom = dtpFrom.Value.ToString("MM/dd/yyyy");
             string dto = dtpTo.Value.ToString("MM/dd/yyyy");
 

@@ -88,11 +88,9 @@ namespace BonsandBlooms
                 {
                     string transNum = DTGLIST.CurrentRow.Cells["Transaction#"].Value.ToString();
 
-                    // Update product quantity
                     query = "UPDATE tblProductInfo AS P, tblStockOut AS S SET PROQTY = PROQTY + OUTQTY WHERE P.PROCODE=S.PROCODE AND TRANSNUM = " + transNum;
                     config.Execute_Query(query);
 
-                    // Delete the transaction
                     query = "DELETE * FROM tblStockOut WHERE TRANSNUM = " + transNum;
                     config.Execute_Query(query);
 

@@ -104,6 +104,7 @@
             this.Label2.TabIndex = 3;
             this.Label2.Text = "List of Products";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // Panel1
             // 
