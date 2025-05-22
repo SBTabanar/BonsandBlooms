@@ -43,7 +43,6 @@ namespace BonsandBlooms
             }
         }
 
-
         private void frmStockout_Load(object sender, EventArgs e)
         {
             try
@@ -90,7 +89,6 @@ namespace BonsandBlooms
             }
         }
 
-
         private void TXTPRODUCT_TextChanged(object sender, EventArgs e)
         {
             try
@@ -128,7 +126,6 @@ namespace BonsandBlooms
                 ShowError("Error loading product details: " + ex.Message);
             }
         }
-
 
         private void TXTQTY_TextChanged(object sender, EventArgs e)
         {
@@ -238,6 +235,9 @@ namespace BonsandBlooms
 
                 double newQty = availableQty - qty;
 
+                LBLMSG.Text = $"The {TXTPRODUCT.Text} has been deducted from the inventory.";
+                LBLMSG.BackColor = Color.Aquamarine;
+                LBLMSG.ForeColor = Color.Black;
 
                 config.update_Autonumber(1);
 
@@ -274,6 +274,17 @@ namespace BonsandBlooms
             }
         }
 
+        private void btnProductList_Click(object sender, EventArgs e)
+        {
+            using (var listForm = new frmListofProducts())
+            {
+                if (listForm.ShowDialog() == DialogResult.OK)
+                {
+                    txtPROCODE.Text = listForm.SelectedProductCode;
+                    TXTPRODUCT.Text = listForm.SelectedProductName;
+                }
+            }
+        }
 
         private void ClearProductDetails()
         {

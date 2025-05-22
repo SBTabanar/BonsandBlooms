@@ -51,7 +51,7 @@ namespace BonsandBlooms
                 SelectedProductCode = row.Cells["ProductCode"].Value.ToString();
                 SelectedProductName = row.Cells["Product"].Value.ToString();
                 SelectedCategory = row.Cells["Category"].Value.ToString();
-                SelectedDesc = row.Cells["Product"].Value.ToString(); // Or use another column if you have description
+                SelectedDesc = row.Cells["Product"].Value.ToString(); 
                 SelectedPrice = row.Cells["Price"].Value.ToString();
                 SelectedQty = row.Cells["Quantity"].Value.ToString();
                 this.DialogResult = DialogResult.OK;
@@ -71,19 +71,50 @@ namespace BonsandBlooms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            query = "UPDATE tblProductInfo AS P, tblStockOut AS S SET PROQTY = PROQTY + OUTQTY  WHERE P.PROCODE=S.PROCODE AND TRANSNUM = " + DTGLIST.CurrentRow.Cells[0].Value;
-            config.Execute_Query(query);
+            if (DTGLIST.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a transaction to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            query = "DELETE * FROM tblStockOut WHERE TRANSNUM = " + DTGLIST.CurrentRow.Cells[0].Value;
-            config.Execute_Query(query);
+            var result = MessageBox.Show("Are you sure you want to delete the selected transaction? This action cannot be undone.",
+                                         "Confirm Delete",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Warning);
 
-            MessageBox.Show("Transaction has been deleted.");
-            btnRefresh_Click(sender, e);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    string transNum = DTGLIST.CurrentRow.Cells["Transaction#"].Value.ToString();
+
+                    // Update product quantity
+                    query = "UPDATE tblProductInfo AS P, tblStockOut AS S SET PROQTY = PROQTY + OUTQTY WHERE P.PROCODE=S.PROCODE AND TRANSNUM = " + transNum;
+                    config.Execute_Query(query);
+
+                    // Delete the transaction
+                    query = "DELETE * FROM tblStockOut WHERE TRANSNUM = " + transNum;
+                    config.Execute_Query(query);
+
+                    MessageBox.Show("Transaction has been deleted.");
+                    btnRefresh_Click(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting transaction: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
+
 
         private void frmListStockout_Load(object sender, EventArgs e)
         {
             btnRefresh_Click(sender, e);
+        }
+
+        private void DTGLIST_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

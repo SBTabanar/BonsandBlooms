@@ -19,13 +19,11 @@ namespace BonsandBlooms
             InitializeComponent();
             this.frm = frm;
 
-            // Set the AcceptButton so Enter key triggers OK button click
             this.AcceptButton = OK;
         }
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            // Optional: any initialization code here
         }
 
         private void OK_Click(object sender, EventArgs e)
@@ -66,7 +64,6 @@ namespace BonsandBlooms
             this.Close();
         }
 
-        // Other event handlers can remain empty or be removed if unused
         private void Label1_Click(object sender, EventArgs e) { }
         private void label1_Click_1(object sender, EventArgs e) { }
         private void UsernameTextBox_TextChanged(object sender, EventArgs e) { }

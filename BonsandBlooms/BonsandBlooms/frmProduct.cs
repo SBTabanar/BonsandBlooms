@@ -74,13 +74,13 @@ namespace BonsandBlooms
                       "', PROPRICE=" + price +
                       ", PROQTY=" + qty +
                       " WHERE PROCODE='" + txtPROCODE.Text + "'";
-                config.Execute_CUD(sql, "Error to update Product", "Product Has Been Updated.");
+                config.Execute_CUD(sql, "Error to update Product", "Product has been updated.");
             }
             else
             {
                 sql = "INSERT INTO tblProductInfo (PROCODE, PRONAME, PRODESC, CATEGORY, PROPRICE, PROQTY) " +
                       "VALUES ('" + txtPROCODE.Text + "', '" + TXTPRONAME.Text + "', '" + TXTDESC.Text + "', '" + cboCateg.Text + "', " + price + ", " + qty + ")";
-                config.Execute_CUD(sql, "Error to save Product.", "New Product Has Been Saved.");
+                config.Execute_CUD(sql, "Error to save Product.", "Product added successfully!");
 
                 config.update_Autonumber(2);
             }

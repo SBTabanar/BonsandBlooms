@@ -191,7 +191,7 @@
             this.MinimumSize = new System.Drawing.Size(841, 548);
             this.Name = "frmListStockin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "List of Recieved Products";
+            this.Text = "Stock-in History";
             this.Load += new System.EventHandler(this.frmListStockin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DTGLIST)).EndInit();
             this.ResumeLayout(false);

@@ -1,46 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BonsandBlooms
 {
     public partial class frmListofProducts : Form
     {
-        public frmListofProducts()
-        {
-            InitializeComponent();
-        }
+        public string SelectedProductCode { get; private set; }
+        public string SelectedProductName { get; private set; }
+
         DatabaseConnect config = new DatabaseConnect();
         usableFunction func = new usableFunction();
         string sql;
         int maxrow;
-        private void btnNew_Click(object sender, EventArgs e)
+
+        public frmListofProducts()
         {
-            Form frm = new frmProduct();
-            frm.ShowDialog();
+            InitializeComponent();
+            DTGLIST.CellDoubleClick += DTGLIST_CellDoubleClick;
         }
 
+        private void frmListofProducts_Load(object sender, EventArgs e)
+        {
+            btnRefresh_Click(sender, e);
+        }
         public void refresh()
         {
-            sql = "SELECT PROCODE as [ProductCode], (PRONAME + ' - ' + PRODESC) AS [Product],CATEGORY AS [Category], (PROPRICE) AS [Price],PROQTY AS [Quantity] FROM  tblProductInfo";
+            sql = "SELECT PROCODE as [ProductCode], PRONAME AS [ProductName], PRODESC AS [Description], CATEGORY AS [Category], PROPRICE AS [Price], PROQTY AS [Quantity] FROM tblProductInfo";
             config.Load_DTG(sql, DTGLIST);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            sql = "SELECT PROCODE as [ProductCode], (PRONAME + ' - ' + PRODESC) AS [Product],CATEGORY AS [Category], (PROPRICE) AS [Price],PROQTY AS [Quantity] FROM  tblProductInfo";
+            sql = "SELECT PROCODE as [ProductCode], PRONAME AS [ProductName], PRODESC AS [Description], CATEGORY AS [Category], PROPRICE AS [Price], PROQTY AS [Quantity] FROM tblProductInfo";
             config.Load_DTG(sql, DTGLIST);
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void btnNew_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Form frm = new frmProduct();
+            frm.ShowDialog();
+            btnRefresh_Click(sender, e);
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (DTGLIST.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a product to edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Form frm = new frmEditProduct(DTGLIST.CurrentRow.Cells["ProductCode"].Value.ToString(), this);
+            frm.ShowDialog();
+            btnRefresh_Click(sender, e);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -51,7 +64,6 @@ namespace BonsandBlooms
                 return;
             }
 
-            // Confirm deletion
             var result = MessageBox.Show("Are you sure you want to delete the selected product? This action cannot be undone.",
                                          "Confirm Delete",
                                          MessageBoxButtons.YesNo,
@@ -81,36 +93,38 @@ namespace BonsandBlooms
             }
         }
 
-
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void DTGLIST_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Form frm = new frmEditProduct(DTGLIST.CurrentRow.Cells[0].Value.ToString(),this);
-            frm.ShowDialog();
-        }
-
-        private void frmListofProducts_Load(object sender, EventArgs e)
-        {
-            btnRefresh_Click(sender, e);
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = DTGLIST.Rows[e.RowIndex];
+                SelectedProductCode = row.Cells["ProductCode"].Value.ToString();
+                SelectedProductName = row.Cells["ProductName"].Value.ToString();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         private void TXTSEARCH_TextChanged(object sender, EventArgs e)
         {
-             
-            DTGLIST.Columns.Clear();
-             
-            sql = "SELECT PROCODE as [ProductCode], (PRONAME + ' - ' + PRODESC) AS [Product],CATEGORY AS [Category], (PROPRICE) AS [Price],PROQTY  AS [Quantity] FROM  tblProductInfo WHERE  (PROCODE + ' ' + PRONAME + ' ' + PRODESC  + ' ' + CATEGORY)  LIKE '%" + TXTSEARCH.Text + "%'";
+            sql = "SELECT PROCODE as [ProductCode], PRONAME AS [ProductName], PRODESC AS [Description], CATEGORY AS [Category], PROPRICE AS [Price], PROQTY AS [Quantity] " +
+                  "FROM tblProductInfo WHERE (PROCODE + ' ' + PRONAME + ' ' + PRODESC + ' ' + CATEGORY) LIKE '%" + TXTSEARCH.Text + "%'";
+            config.Load_DTG(sql, DTGLIST);
+        }
 
-
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            // Optional: Add image click behavior
         }
 
         private void DTGLIST_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            // Optional: Add cell content click behavior
         }
     }
 }

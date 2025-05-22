@@ -16,7 +16,6 @@ namespace BonsandBlooms
         {
             InitializeComponent();
 
-            // Wire up the handlers for autocomplete and synchronization
             TXTPRODUCT.TextChanged += TXTPRODUCT_TextChanged;
             txtPROCODE.TextChanged += txtPROCODE_TextChanged;
         }
@@ -46,13 +45,10 @@ namespace BonsandBlooms
 
                 config.autonumber_transaction(1, LBLTRANSNUM);
 
-                // Autocomplete for product code
                 config.autocomplete("SELECT PROCODE FROM tblProductInfo", txtPROCODE);
 
-                // Autocomplete for product name
                 config.autocomplete("SELECT PRONAME FROM tblProductInfo", TXTPRODUCT);
 
-                // Ensure product name textbox is enabled and editable
                 TXTPRODUCT.Enabled = true;
                 TXTPRODUCT.ReadOnly = false;
             }
@@ -71,7 +67,6 @@ namespace BonsandBlooms
         {
             try
             {
-                // Validate required fields
                 if (string.IsNullOrWhiteSpace(TXTDESC.Text) ||
                     string.IsNullOrWhiteSpace(TXTQTY.Text) ||
                     string.IsNullOrWhiteSpace(txtPROCODE.Text) ||
@@ -81,7 +76,6 @@ namespace BonsandBlooms
                     return;
                 }
 
-                // Validate quantity is a positive integer
                 if (!int.TryParse(TXTQTY.Text, out int qty) || qty <= 0)
                 {
                     ShowWarning("Quantity must be a positive whole number.");
@@ -89,28 +83,24 @@ namespace BonsandBlooms
                     return;
                 }
 
-                // Validate price is a positive number
                 if (!double.TryParse(TXTPRICE.Text, out double price) || price < 0)
                 {
                     ShowWarning("Price must be a valid non-negative number.");
                     return;
                 }
 
-                // Validate total price is consistent
                 if (!double.TryParse(TXTTOT.Text, out double total) || total < 0)
                 {
                     ShowWarning("Total price is invalid.");
                     return;
                 }
 
-                // Validate transaction number
                 if (!int.TryParse(LBLTRANSNUM.Text, out int transnum))
                 {
                     ShowWarning("Invalid transaction number.");
                     return;
                 }
 
-                // Insert stock-in record using parameterized query for security
                 sql = "INSERT INTO tblStockIn (TRANSNUM, PROCODE, DATERECEIVED, RECEIVEDQTY, RECEIVEDTOTPRICE) " +
                       "VALUES (?, ?, ?, ?, ?)";
                 var parametersInsert = new[]
@@ -123,7 +113,6 @@ namespace BonsandBlooms
                 };
                 config.Execute_CUD(sql, "Error adding stock-in record.", "Stock-in record added successfully.", parametersInsert);
 
-                // Update product quantity safely
                 sql = "UPDATE tblProductInfo SET PROQTY = PROQTY + ? WHERE PROCODE = ?";
                 var parametersUpdate = new[]
                 {
@@ -162,7 +151,6 @@ namespace BonsandBlooms
                 if (maxrow > 0)
                 {
                     var r = dt.Rows[0];
-                    // Only update if different to avoid recursion
                     if (TXTPRODUCT.Text != r.Field<string>("PRONAME"))
                         TXTPRODUCT.Text = r.Field<string>("PRONAME");
                     TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
@@ -188,7 +176,6 @@ namespace BonsandBlooms
             {
                 if (string.IsNullOrWhiteSpace(TXTPRODUCT.Text))
                 {
-                    // Autodelete product code if product name is deleted
                     txtPROCODE.Clear();
                     ClearProductDetails();
                     return;
@@ -200,7 +187,6 @@ namespace BonsandBlooms
                 if (maxrow > 0)
                 {
                     var r = dt.Rows[0];
-                    // Only update if different to avoid recursion
                     if (txtPROCODE.Text != r.Field<string>("PROCODE"))
                         txtPROCODE.Text = r.Field<string>("PROCODE");
                     TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
@@ -210,7 +196,6 @@ namespace BonsandBlooms
                 }
                 else
                 {
-                    // If the name is not found, clear details except the name itself
                     txtPROCODE.Clear();
                     TXTDESC.Clear();
                     TXTPRICE.Clear();
@@ -298,5 +283,18 @@ namespace BonsandBlooms
         {
 
         }
+
+        private void btnProductList_Click(object sender, EventArgs e)
+        {
+            using (var listForm = new frmListofProducts())
+            {
+                if (listForm.ShowDialog() == DialogResult.OK)
+                {
+                    txtPROCODE.Text = listForm.SelectedProductCode;
+                    TXTPRODUCT.Text = listForm.SelectedProductName;
+                }
+            }
+        }
+
     }
 }

@@ -62,6 +62,7 @@
             this.Label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.LBLMSG = new System.Windows.Forms.Label();
+            this.btnProductList = new System.Windows.Forms.Button();
             this.GroupBox2.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -228,15 +229,15 @@
             // 
             // btnList
             // 
-            this.btnList.BackColor = System.Drawing.SystemColors.Control;
+            this.btnList.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnList.Location = new System.Drawing.Point(728, 471);
+            this.btnList.Location = new System.Drawing.Point(656, 485);
             this.btnList.Margin = new System.Windows.Forms.Padding(4);
             this.btnList.Name = "btnList";
             this.btnList.Size = new System.Drawing.Size(99, 39);
             this.btnList.TabIndex = 54;
-            this.btnList.Text = "List";
+            this.btnList.Text = "History";
             this.btnList.UseVisualStyleBackColor = false;
             this.btnList.Click += new System.EventHandler(this.btnList_Click);
             // 
@@ -276,7 +277,7 @@
             this.BTNNEW.BackColor = System.Drawing.SystemColors.Control;
             this.BTNNEW.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BTNNEW.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNNEW.Location = new System.Drawing.Point(513, 471);
+            this.BTNNEW.Location = new System.Drawing.Point(547, 485);
             this.BTNNEW.Margin = new System.Windows.Forms.Padding(4);
             this.BTNNEW.Name = "BTNNEW";
             this.BTNNEW.Size = new System.Drawing.Size(99, 39);
@@ -301,7 +302,7 @@
             this.BTNSAVE.BackColor = System.Drawing.Color.LightGreen;
             this.BTNSAVE.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BTNSAVE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNSAVE.Location = new System.Drawing.Point(620, 471);
+            this.BTNSAVE.Location = new System.Drawing.Point(832, 485);
             this.BTNSAVE.Margin = new System.Windows.Forms.Padding(4);
             this.BTNSAVE.Name = "BTNSAVE";
             this.BTNSAVE.Size = new System.Drawing.Size(99, 39);
@@ -335,7 +336,7 @@
             this.BTNCLOSE.BackColor = System.Drawing.Color.LightCoral;
             this.BTNCLOSE.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BTNCLOSE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNCLOSE.Location = new System.Drawing.Point(834, 470);
+            this.BTNCLOSE.Location = new System.Drawing.Point(440, 485);
             this.BTNCLOSE.Margin = new System.Windows.Forms.Padding(4);
             this.BTNCLOSE.Name = "BTNCLOSE";
             this.BTNCLOSE.Size = new System.Drawing.Size(99, 39);
@@ -455,20 +456,36 @@
             this.LBLMSG.Text = "Label11";
             this.LBLMSG.Click += new System.EventHandler(this.LBLMSG_Click);
             // 
+            // btnProductList
+            // 
+            this.btnProductList.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnProductList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnProductList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProductList.Location = new System.Drawing.Point(333, 485);
+            this.btnProductList.Margin = new System.Windows.Forms.Padding(4);
+            this.btnProductList.Name = "btnProductList";
+            this.btnProductList.Size = new System.Drawing.Size(99, 39);
+            this.btnProductList.TabIndex = 75;
+            this.btnProductList.Text = "Product List";
+            this.btnProductList.UseMnemonic = false;
+            this.btnProductList.UseVisualStyleBackColor = false;
+            this.btnProductList.Click += new System.EventHandler(this.btnProductList_Click);
+            // 
             // frmStockout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(236)))), ((int)(((byte)(228)))));
             this.ClientSize = new System.Drawing.Size(948, 537);
+            this.Controls.Add(this.btnProductList);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnList);
+            this.Controls.Add(this.BTNSAVE);
             this.Controls.Add(this.BTNNEW);
             this.Controls.Add(this.LBLTRANSNUM);
-            this.Controls.Add(this.BTNSAVE);
+            this.Controls.Add(this.BTNCLOSE);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.DTPTRANSDATE);
-            this.Controls.Add(this.BTNCLOSE);
             this.Controls.Add(this.Label6);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.LBLMSG);
@@ -525,5 +542,6 @@
         internal System.Windows.Forms.Label Label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         internal System.Windows.Forms.Label LBLMSG;
+        internal System.Windows.Forms.Button btnProductList;
     }
 }
