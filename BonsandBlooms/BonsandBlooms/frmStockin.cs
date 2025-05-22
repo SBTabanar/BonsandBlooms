@@ -83,25 +83,30 @@ namespace BonsandBlooms
             sql = "SELECT * FROM tblProductInfo WHERE PROCODE ='" + txtPROCODE.Text + "'";
             maxrow = config.maxrow(sql);
 
-           if(maxrow > 0)
+            if (maxrow > 0)
             {
-                foreach(DataRow r in config.dt.Rows)
+                foreach (DataRow r in config.dt.Rows)
                 {
                     TXTPRODUCT.Text = r.Field<string>("PRONAME");
                     TXTDESC.Text = r.Field<string>("PRODESC") + " [" + r.Field<string>("CATEGORY") + "]";
                     TXTPRICE.Text = r.Field<decimal>("PROPRICE").ToString();
+
+                    int currentQty = r.Field<int>("PROQTY");
+                    LBLCURRENTQTY.Text = "Current Quantity: " + currentQty.ToString();
                 }
-            
             }
-           else
+            else
             {
                 TXTPRODUCT.Clear();
                 TXTDESC.Clear();
                 TXTPRICE.Clear();
                 TXTQTY.Clear();
                 TXTTOT.Clear();
-            } 
+
+                LBLCURRENTQTY.Text = "Current Quantity: 0";
+            }
         }
+
 
         private void TXTQTY_TextChanged(object sender, EventArgs e)
         {
@@ -124,6 +129,16 @@ namespace BonsandBlooms
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GroupBox1_Enter(object sender, EventArgs e)
         {
 
         }

@@ -42,6 +42,7 @@
             this.Label8 = new System.Windows.Forms.Label();
             this.TXTPRODUCT = new System.Windows.Forms.TextBox();
             this.GroupBox3 = new System.Windows.Forms.GroupBox();
+            this.LBLUNIT = new System.Windows.Forms.Label();
             this.Label15 = new System.Windows.Forms.Label();
             this.BTNNEW = new System.Windows.Forms.Button();
             this.BTNADD = new System.Windows.Forms.Button();
@@ -54,8 +55,8 @@
             this.TXTDESC = new System.Windows.Forms.RichTextBox();
             this.CBOUNIT = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.LBLUNIT = new System.Windows.Forms.Label();
             this.LBLMSG = new System.Windows.Forms.Label();
+            this.LBLCURRENTQTY = new System.Windows.Forms.Label();
             this.GroupBox3.SuspendLayout();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -203,6 +204,7 @@
             // 
             // GroupBox3
             // 
+            this.GroupBox3.Controls.Add(this.LBLCURRENTQTY);
             this.GroupBox3.Controls.Add(this.LBLUNIT);
             this.GroupBox3.Controls.Add(this.Label12);
             this.GroupBox3.Controls.Add(this.Label11);
@@ -221,6 +223,17 @@
             this.GroupBox3.TabIndex = 1;
             this.GroupBox3.TabStop = false;
             this.GroupBox3.Text = "Summary";
+            // 
+            // LBLUNIT
+            // 
+            this.LBLUNIT.AutoSize = true;
+            this.LBLUNIT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBLUNIT.Location = new System.Drawing.Point(298, 85);
+            this.LBLUNIT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LBLUNIT.Name = "LBLUNIT";
+            this.LBLUNIT.Size = new System.Drawing.Size(42, 17);
+            this.LBLUNIT.TabIndex = 13;
+            this.LBLUNIT.Text = "Unit:";
             // 
             // Label15
             // 
@@ -327,6 +340,7 @@
             this.GroupBox1.TabIndex = 32;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Product Details";
+            this.GroupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
             // 
             // Label5
             // 
@@ -372,17 +386,6 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // LBLUNIT
-            // 
-            this.LBLUNIT.AutoSize = true;
-            this.LBLUNIT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBLUNIT.Location = new System.Drawing.Point(298, 85);
-            this.LBLUNIT.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LBLUNIT.Name = "LBLUNIT";
-            this.LBLUNIT.Size = new System.Drawing.Size(42, 17);
-            this.LBLUNIT.TabIndex = 13;
-            this.LBLUNIT.Text = "Unit:";
-            // 
             // LBLMSG
             // 
             this.LBLMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -392,6 +395,17 @@
             this.LBLMSG.Size = new System.Drawing.Size(915, 23);
             this.LBLMSG.TabIndex = 36;
             this.LBLMSG.Text = "Label11";
+            // 
+            // LBLCURRENTQTY
+            // 
+            this.LBLCURRENTQTY.AutoSize = true;
+            this.LBLCURRENTQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBLCURRENTQTY.Location = new System.Drawing.Point(397, 154);
+            this.LBLCURRENTQTY.Name = "LBLCURRENTQTY";
+            this.LBLCURRENTQTY.Size = new System.Drawing.Size(95, 16);
+            this.LBLCURRENTQTY.TabIndex = 18;
+            this.LBLCURRENTQTY.Text = "Current Qty : ";
+            this.LBLCURRENTQTY.Click += new System.EventHandler(this.label6_Click);
             // 
             // frmStockin
             // 
@@ -458,5 +472,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         internal System.Windows.Forms.Label LBLUNIT;
         internal System.Windows.Forms.Label LBLMSG;
+        private System.Windows.Forms.Label LBLCURRENTQTY;
     }
 }

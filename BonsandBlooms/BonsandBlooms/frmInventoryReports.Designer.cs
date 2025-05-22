@@ -113,7 +113,7 @@
             this.cboCateg.Name = "cboCateg";
             this.cboCateg.Size = new System.Drawing.Size(352, 24);
             this.cboCateg.TabIndex = 6;
-            this.cboCateg.Text = "Category";
+            this.cboCateg.Text = "Select a category";
             this.cboCateg.SelectedIndexChanged += new System.EventHandler(this.cboCateg_SelectedIndexChanged);
             // 
             // btnClose
@@ -430,7 +430,7 @@
             this.MinimumSize = new System.Drawing.Size(1184, 645);
             this.Name = "frmInventoryReports";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Reports";
+            this.Text = "s";
             this.Load += new System.EventHandler(this.frmInventoryReports_Load);
             this.Panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtglist)).EndInit();

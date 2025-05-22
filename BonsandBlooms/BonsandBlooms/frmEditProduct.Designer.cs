@@ -65,6 +65,8 @@
             "Sandwiches",
             "Soup",
             "Vegetables"});
+            this.cboCateg.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cboCateg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCateg.FormattingEnabled = true;
             this.cboCateg.Items.AddRange(new object[] {
             "Beverage",
@@ -81,7 +83,6 @@
             this.cboCateg.Name = "cboCateg";
             this.cboCateg.Size = new System.Drawing.Size(395, 24);
             this.cboCateg.TabIndex = 69;
-            this.cboCateg.Text = "Select";
             this.cboCateg.SelectedIndexChanged += new System.EventHandler(this.cboCateg_SelectedIndexChanged);
             // 
             // Label1
@@ -199,6 +200,7 @@
             this.Button2.TabIndex = 58;
             this.Button2.Text = "Close";
             this.Button2.UseVisualStyleBackColor = false;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // btnList
             // 
@@ -239,7 +241,6 @@
             this.label5.Size = new System.Drawing.Size(284, 50);
             this.label5.TabIndex = 70;
             this.label5.Text = "Edit a Product";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // imageList1
             // 

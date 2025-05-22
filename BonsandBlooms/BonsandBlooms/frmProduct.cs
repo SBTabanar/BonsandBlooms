@@ -40,37 +40,54 @@ namespace BonsandBlooms
 
         private void BTNSAVE_Click(object sender, EventArgs e)
         {
-
-
-            if (TXTPRONAME.Text == "" || TXTDESC.Text == "" || cboCateg.Text == "Select" || TXTPRICE.Text == "")
+            if (TXTPRONAME.Text == "" || TXTDESC.Text == "" || cboCateg.Text == "Select" || TXTPRICE.Text == "" || txtPROQTY.Text == "")
             {
                 func.messagerequired();
+                return;
             }
 
+            int qty;
+            decimal price;
+
+            if (!int.TryParse(txtPROQTY.Text, out qty) || qty < 0)
+            {
+                MessageBox.Show("Please enter a valid non-negative integer for Quantity.");
+                txtPROQTY.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(TXTPRICE.Text, out price) || price < 0)
+            {
+                MessageBox.Show("Please enter a valid non-negative number for Price.");
+                TXTPRICE.Focus();
+                return;
+            }
 
             sql = "SELECT * FROM tblProductInfo WHERE PROCODE='" + txtPROCODE.Text + "'";
             maxrow = config.maxrow(sql);
 
             if (maxrow > 0)
             {
-                sql = "UPDATE  tblProductInfo  SET PRONAME='" + TXTPRONAME.Text +
-                    "' ,PRODESC='" + TXTDESC.Text +
-                    "',CATEGORY='" + cboCateg.Text +
-                    "',PROPRICE=" + TXTPRICE.Text + "  WHERE PROCODE='" + txtPROCODE.Text + "'";
+                sql = "UPDATE tblProductInfo SET PRONAME='" + TXTPRONAME.Text +
+                      "', PRODESC='" + TXTDESC.Text +
+                      "', CATEGORY='" + cboCateg.Text +
+                      "', PROPRICE=" + price +
+                      ", PROQTY=" + qty +
+                      " WHERE PROCODE='" + txtPROCODE.Text + "'";
                 config.Execute_CUD(sql, "Error to update Product", "Product Has Been Updated.");
             }
             else
             {
-                sql = "INSERT INTO tblProductInfo (PROCODE,PRONAME,PRODESC,CATEGORY,PROPRICE,PROQTY)"
-                      + " VALUES ( '" + txtPROCODE.Text + "', '" + TXTPRONAME.Text + "','" + TXTDESC.Text + "','" + cboCateg.Text + "','" + TXTPRICE.Text + "',0)";
+                sql = "INSERT INTO tblProductInfo (PROCODE, PRONAME, PRODESC, CATEGORY, PROPRICE, PROQTY) " +
+                      "VALUES ('" + txtPROCODE.Text + "', '" + TXTPRONAME.Text + "', '" + TXTDESC.Text + "', '" + cboCateg.Text + "', " + price + ", " + qty + ")";
                 config.Execute_CUD(sql, "Error to save Product.", "New Product Has Been Saved.");
 
                 config.update_Autonumber(2);
             }
 
             Button1_Click(sender, e);
-          
         }
+
 
         private void cboCateg_SelectedIndexChanged(object sender, EventArgs e)
         {

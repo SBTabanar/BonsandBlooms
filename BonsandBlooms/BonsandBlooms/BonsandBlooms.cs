@@ -24,7 +24,7 @@ namespace BonsandBlooms
 
         public void enable_menu()
         {
-            tsBread.Enabled = true;
+            tsFlower.Enabled = true;
             tsListofProducts.Enabled = true;
             tsLogin.Text = "Logout";
             tsReport.Enabled = true;
@@ -36,7 +36,7 @@ namespace BonsandBlooms
 
         private void disable_menu()
         {
-            tsBread.Enabled = false;
+            tsFlower.Enabled = false;
             tsListofProducts.Enabled = false;
             tsLogin.Text = "Login";
             tsReport.Enabled = false;

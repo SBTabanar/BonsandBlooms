@@ -69,20 +69,43 @@ namespace BonsandBlooms
 
         private void TXTQTY_TextChanged(object sender, EventArgs e)
         {
-            double remainqty, totalamount;
-            if(TXTQTY.Text == "")
+            double availableQty, enteredQty, remainQty, totalAmount;
+
+            if (!double.TryParse(TXTAVAILQTY.Text, out availableQty))
             {
+                availableQty = 0;
+            }
+
+            if (!double.TryParse(TXTQTY.Text, out enteredQty) || string.IsNullOrWhiteSpace(TXTQTY.Text))
+            {
+                remainQty = availableQty;
                 TXTTOT.Text = "0";
-                TXTREMAINQTY.Text = TXTAVAILQTY.Text;
             }
             else
             {
-                remainqty= Double.Parse(TXTAVAILQTY.Text) - Double.Parse(TXTQTY.Text);
-                TXTREMAINQTY.Text = remainqty.ToString();
-                totalamount = Double.Parse(TXTPRICE.Text) * Double.Parse(TXTQTY.Text);
-                TXTTOT.Text = totalamount.ToString();
-            } 
+                if (enteredQty > availableQty)
+                {
+                    remainQty = 0;
+                    enteredQty = availableQty;
+                    TXTQTY.Text = availableQty.ToString();
+                    TXTQTY.SelectionStart = TXTQTY.Text.Length; 
+                }
+                else
+                {
+                    remainQty = availableQty - enteredQty;
+                }
+                double price;
+                if (!double.TryParse(TXTPRICE.Text, out price))
+                {
+                    price = 0;
+                }
+                totalAmount = price * enteredQty;
+                TXTTOT.Text = totalAmount.ToString("F2"); 
+            }
+
+            TXTREMAINQTY.Text = remainQty.ToString();
         }
+
 
         private void BTNCLOSE_Click(object sender, EventArgs e)
         {
@@ -91,35 +114,45 @@ namespace BonsandBlooms
 
         private void BTNSAVE_Click(object sender, EventArgs e)
         {
-            if( TXTDESC.Text != "" &&  TXTQTY.Text != "")
+            if (TXTDESC.Text != "" && TXTQTY.Text != "")
             {
                 double Rqty = Double.Parse(TXTAVAILQTY.Text);
                 double qty = Double.Parse(TXTQTY.Text);
 
-                if ( Rqty < qty)
+                if (Rqty < qty)
                 {
                     LBLMSG.Text = "Not valid. The entered quantity is greater than the available quantity!";
                     LBLMSG.BackColor = Color.Red;
                     LBLMSG.ForeColor = Color.White;
                 }
                 else
-                { 
-                    query = "INSERT INTO tblStockOut (TRANSNUM,PROCODE,DATEOUT,OUTQTY,OUTUNIT,OUTTOTPRICE ) " +
-                        " VALUES ('" + LBLTRANSNUM.Text + "','" + txtPROCODE.Text + "','" + DTPTRANSDATE.Value + "','" + TXTQTY.Text + "','" + LBLUNIT.Text + "','" + TXTTOT.Text + "')";
+                {
+                    query = "INSERT INTO tblStockOut (TRANSNUM, PROCODE, DATEOUT, OUTQTY, OUTUNIT, OUTTOTPRICE) " +
+                            "VALUES ('" + LBLTRANSNUM.Text + "','" + txtPROCODE.Text + "','" + DTPTRANSDATE.Value + "','" + TXTQTY.Text + "','" + LBLUNIT.Text + "','" + TXTTOT.Text + "')";
                     config.Execute_Query(query);
 
-                    query = "UPDATE tblProductInfo SET PROQTY = PROQTY - " + TXTQTY.Text + "  WHERE PROCODE = '" + txtPROCODE.Text + "'";
-                     config.Execute_Query(query);
+                    query = "UPDATE tblProductInfo SET PROQTY = PROQTY - " + TXTQTY.Text + " WHERE PROCODE = '" + txtPROCODE.Text + "'";
+                    config.Execute_Query(query);
 
+                    double newQty = Rqty - qty;
 
                     LBLMSG.Text = "The " + TXTPRODUCT.Text + " has been deducted into the inventory.";
                     LBLMSG.BackColor = Color.Aquamarine;
                     LBLMSG.ForeColor = Color.Black;
-                    ;
+
                     config.update_Autonumber(1);
 
-                    BTNNEW_Click(sender, e);
+                    if (newQty < 10)
+                    {
+                        MessageBox.Show(
+                            "Warning: The stock quantity for product '" + TXTPRODUCT.Text + "' has dropped below 10.\nPlease restock soon.",
+                            "Low Stock Alert",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
 
+                    BTNNEW_Click(sender, e);
                 }
             }
             else
@@ -128,8 +161,8 @@ namespace BonsandBlooms
                 LBLMSG.BackColor = Color.Red;
                 LBLMSG.ForeColor = Color.White;
             }
- 
         }
+
 
         private void btnList_Click(object sender, EventArgs e)
         {

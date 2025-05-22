@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsBread = new System.Windows.Forms.ToolStripButton();
+            this.tsFlower = new System.Windows.Forms.ToolStripButton();
             this.tsListofProducts = new System.Windows.Forms.ToolStripButton();
             this.tsStockin = new System.Windows.Forms.ToolStripButton();
             this.tsStockout = new System.Windows.Forms.ToolStripButton();
@@ -50,7 +50,7 @@
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(135, 135);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsBread,
+            this.tsFlower,
             this.tsListofProducts,
             this.tsStockin,
             this.tsStockout,
@@ -65,15 +65,15 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
-            // tsBread
+            // tsFlower
             // 
-            this.tsBread.Image = global::BonsandBlooms.Properties.Resources.product;
-            this.tsBread.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBread.Name = "tsBread";
-            this.tsBread.Size = new System.Drawing.Size(139, 154);
-            this.tsBread.Text = "Products";
-            this.tsBread.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsBread.Click += new System.EventHandler(this.tsProduct_Click);
+            this.tsFlower.Image = global::BonsandBlooms.Properties.Resources.product;
+            this.tsFlower.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsFlower.Name = "tsFlower";
+            this.tsFlower.Size = new System.Drawing.Size(139, 154);
+            this.tsFlower.Text = "Products";
+            this.tsFlower.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsFlower.Click += new System.EventHandler(this.tsProduct_Click);
             // 
             // tsListofProducts
             // 
@@ -192,7 +192,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tsBread;
+        private System.Windows.Forms.ToolStripButton tsFlower;
         private System.Windows.Forms.ToolStripButton tsStockin;
         private System.Windows.Forms.ToolStripButton tsStockout;
         private System.Windows.Forms.ToolStripButton tsUser;

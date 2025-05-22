@@ -44,11 +44,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Label3 = new System.Windows.Forms.Label();
+            this.PROQTY = new System.Windows.Forms.Label();
+            this.txtPROQTY = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cboCateg
             // 
+            this.cboCateg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCateg.FormattingEnabled = true;
             this.cboCateg.Items.AddRange(new object[] {
             "Rose",
@@ -102,7 +105,7 @@
             // TXTPRICE
             // 
             this.TXTPRICE.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TXTPRICE.Location = new System.Drawing.Point(140, 297);
+            this.TXTPRICE.Location = new System.Drawing.Point(140, 322);
             this.TXTPRICE.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TXTPRICE.Name = "TXTPRICE";
             this.TXTPRICE.Size = new System.Drawing.Size(99, 30);
@@ -143,7 +146,7 @@
             // 
             this.Label4.AutoSize = true;
             this.Label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(247, 297);
+            this.Label4.Location = new System.Drawing.Point(242, 333);
             this.Label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(33, 16);
@@ -154,7 +157,7 @@
             // 
             this.Label6.AutoSize = true;
             this.Label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(44, 297);
+            this.Label6.Location = new System.Drawing.Point(47, 334);
             this.Label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(48, 15);
@@ -166,7 +169,7 @@
             this.Button2.BackColor = System.Drawing.Color.LightCoral;
             this.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button2.Location = new System.Drawing.Point(350, 359);
+            this.Button2.Location = new System.Drawing.Point(350, 386);
             this.Button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(97, 32);
@@ -180,7 +183,7 @@
             this.Button1.BackColor = System.Drawing.SystemColors.Control;
             this.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button1.Location = new System.Drawing.Point(245, 359);
+            this.Button1.Location = new System.Drawing.Point(245, 386);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(97, 32);
@@ -194,7 +197,7 @@
             this.BTNSAVE.BackColor = System.Drawing.Color.LightGreen;
             this.BTNSAVE.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BTNSAVE.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNSAVE.Location = new System.Drawing.Point(140, 359);
+            this.BTNSAVE.Location = new System.Drawing.Point(140, 386);
             this.BTNSAVE.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BTNSAVE.Name = "BTNSAVE";
             this.BTNSAVE.Size = new System.Drawing.Size(97, 32);
@@ -236,12 +239,31 @@
             this.Label3.TabIndex = 47;
             this.Label3.Text = "Description :";
             // 
+            // PROQTY
+            // 
+            this.PROQTY.AutoSize = true;
+            this.PROQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PROQTY.Location = new System.Drawing.Point(45, 298);
+            this.PROQTY.Name = "PROQTY";
+            this.PROQTY.Size = new System.Drawing.Size(62, 13);
+            this.PROQTY.TabIndex = 73;
+            this.PROQTY.Text = "Quantity :";
+            // 
+            // txtPROQTY
+            // 
+            this.txtPROQTY.Location = new System.Drawing.Point(140, 294);
+            this.txtPROQTY.Name = "txtPROQTY";
+            this.txtPROQTY.Size = new System.Drawing.Size(100, 20);
+            this.txtPROQTY.TabIndex = 74;
+            // 
             // frmProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(236)))), ((int)(((byte)(228)))));
             this.ClientSize = new System.Drawing.Size(544, 445);
+            this.Controls.Add(this.txtPROQTY);
+            this.Controls.Add(this.PROQTY);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboCateg);
@@ -288,5 +310,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         internal System.Windows.Forms.Label Label3;
+        private System.Windows.Forms.Label PROQTY;
+        private System.Windows.Forms.TextBox txtPROQTY;
     }
 }
